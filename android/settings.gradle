@@ -1,0 +1,3 @@
+rootProject.name = 'fvc_mobile'
+
+include ':app'
