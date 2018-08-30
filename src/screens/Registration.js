@@ -22,18 +22,16 @@ export default class Registration extends Component {
       fullName: '',
       phone: '',
       department: '',
-      address: ''
     }
     this.handleRegistration = this.handleRegistration.bind(this);
   }
 
   handleRegistration() {
-    let { fullName, phone, department, address } = this.state;
+    let { fullName, phone, department, } = this.state;
     axios.post(Config.API_URL+'registration', {
       fullName: fullName,
       phone: phone,
       department: department,
-      address: address
     })
     .then(response => {
 
@@ -56,12 +54,12 @@ export default class Registration extends Component {
   render () {
     const { fullName, phone, department, address } = this.state
     const { isLoading, onLoginLinkPress, onSignupPress } = this.props
-    const isValid = email !== '' && password !== '' && fullName !== ''
+    const isValid = department !== '' && phone !== '' && fullName !== ''
     return (
       <View style={styles.container}>
         <View style={styles.form} ref={(ref) => this.formRef = ref}>
           <CustomTextInput
-            ref={(ref) => this.mobileInputRef = ref}
+            ref={(ref) => this.fullNameInputRef = ref}
             placeholder={'Full name'}
             editable={!isLoading}
             returnKeyType={'next'}
@@ -73,14 +71,14 @@ export default class Registration extends Component {
           />
           <CustomTextInput
             ref={(ref) => this.departmentInputRef = ref}
-            placeholder={'Full name'}
-            keyboardType={'text'}
+            placeholder={'Department or Unit'}
+            keyboardType={'default'}
             editable={!isLoading}
             returnKeyType={'next'}
             blurOnSubmit={false}
             withRef={true}
             onSubmitEditing={() => this.phoneInputRef.focus()}
-            onChangeText={(value) => this.setState({ email: value })}
+            onChangeText={(value) => this.setState({ department: value })}
             isEnabled={!isLoading}
           />
           <CustomTextInput
@@ -88,29 +86,17 @@ export default class Registration extends Component {
             placeholder={'Phone Number'}
             editable={!isLoading}
             blurOnSubmit={false}
-            returnKeyType={'next'}
+            keyboardType={'numeric'}
+            returnKeyType={'done'}
             withRef={true}
-            onSubmitEditing={() => this.addressInputRef.focus()}
             onChangeText={(value) => this.setState({ phone: value })}
-            isEnabled={!isLoading}
-          />
-          <CustomTextInput
-            ref={(ref) => this.addressInputRef = ref}
-            multiline={true}
-            placeholder={'Address'}
-            keyboardType={'done'}
-            editable={!isLoading}
-            returnKeyType={'next'}
-            blurOnSubmit={false}
-            withRef={true}
-            onChangeText={(value) => this.setState({ address: value })}
             isEnabled={!isLoading}
           />
         </View>
         <View style={styles.footer}>
           <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
             <CustomButton
-              onPress={() => onSignupPress(email, password, fullName)}
+              onPress={() => onSignupPress(fullName)}
               isEnabled={isValid}
               isLoading={isLoading}
               buttonStyle={styles.createAccountButton}

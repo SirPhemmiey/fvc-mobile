@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { StyleSheet, AsyncStorage } from 'react-native'
+import { StyleSheet, AsyncStorage, Picker } from 'react-native'
 import { Text, View } from 'react-native-animatable'
 import axios from 'axios';
 import Config from 'react-native-config';
@@ -85,6 +85,13 @@ export default class Login extends Component {
             onChangeText={(value) => this.setState({ password: value })}
             isEnabled={!isLoading}
           />
+          <Picker
+          selectedValue={this.state.language}
+          style={{ height: 50, width: 320 }}
+          onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+          <Picker.Item label="Senior Pastor" value="sp" />
+          <Picker.Item label="Choir" value="choir" />
+        </Picker>
         </View>
         <View style={styles.footer}>
           <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
@@ -105,7 +112,7 @@ export default class Login extends Component {
             duration={600}
             delay={400}
           >
-            {'Not registered yet?'}
+            {'New member?'}
           </Text>
         </View>
       </View>
